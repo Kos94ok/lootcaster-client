@@ -4,6 +4,7 @@
 		<base-textbox :value="enteredPassword" @input="onPasswordEntered" placeholder="Password" input-type="password"></base-textbox>
 		<base-button @click="onRegister">Register</base-button>
 		<base-button @click="onLogin">Login</base-button>
+		<base-button @click="onLogout">Logout</base-button>
 		<div class="response-status">
 			<div class="success">{{ successMessage }}</div>
 			<div class="error">{{ errorMessage }}</div>
@@ -12,7 +13,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import BaseButton from '@/components/BaseButton'
 import BaseTextbox from '@/components/BaseTextbox'
 export default {
@@ -42,7 +43,8 @@ export default {
 	methods: {
 		...mapActions({
 			register: 'player/register',
-			login: 'player/login'
+			login: 'player/login',
+			logout: 'player/logout'
 		}),
 
 		onUsernameEntered(value) {
@@ -63,6 +65,10 @@ export default {
 				username: this.enteredUsername,
 				password: this.enteredPassword
 			})
+		},
+		async onLogout() {
+			this.logout()
+			this.serverResponse = undefined
 		}
 	}
 }

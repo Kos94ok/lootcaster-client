@@ -62,6 +62,7 @@ export default {
 			webSocket.onmessage = (event) => {
 				const message = JSON.parse(event.data)
 				const type = message.type
+				console.log(message)
 				const handler = handlers[type]
 				if (!handler) {
 					console.warn('No handler for ' + message.type)

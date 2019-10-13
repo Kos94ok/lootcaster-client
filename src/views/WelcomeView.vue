@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import CombinedLoginForm from '@/components/CombinedLoginForm'
 import TheGameBrowser from '@/components/TheGameBrowser'
 import TheChatWindow from '@/components/TheChatWindow'
@@ -26,6 +26,10 @@ export default {
 		serverResponse: undefined
 	}),
 
+	mounted() {
+		this.fetchProfile()
+	},
+
 	computed: {
 		...mapGetters({
 			isAuthenticated: 'player/isAuthenticated',
@@ -34,7 +38,9 @@ export default {
 	},
 
 	methods: {
-
+		...mapActions({
+			fetchProfile: 'player/fetchProfile'
+		})
 	}
 }
 </script>

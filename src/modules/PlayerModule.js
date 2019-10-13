@@ -4,13 +4,12 @@ export default {
 	namespaced: true,
 
 	state: {
-		id: '',
 		username: ''
 	},
 
 	getters: {
 		isAuthenticated: (state) => {
-			return !!state.id
+			return !!state.username
 		}
 	},
 
@@ -36,20 +35,36 @@ export default {
 			}
 			try {
 				const response = await axios.post(process.env.VUE_APP_SERVER_HOST + '/login', params)
-				commit('setId', response.data.id)
-				commit('setUsername', response.data.username)
+				commit('setUsername', response.data.data.username)
 				return response.data
 			} catch (err) {
 				console.error(err)
 				return err.response.data
 			}
+		},
+
+		logout: async({ state, commit }) => {
+			try {
+				await axios.post(process.env.VUE_APP_SERVER_HOST + '/logout')
+				commit('setUsername', '')
+			} catch (err) {
+				console.error(err)
+			}
+		},
+
+		fetchProfile: async({ state, commit }) => {
+			console.info('Fetching profile info')
+			try {
+				const response = await axios.get(process.env.VUE_APP_SERVER_HOST + '/profile')
+				commit('setUsername', response.data.data.username)
+				console.log(response.data.data)
+			} catch (err) {
+				console.info('No authentication token present')
+			}
 		}
 	},
 
 	mutations: {
-		setId(state, id) {
-			state.id = id
-		},
 		setUsername(state, username) {
 			state.username = username
 		}
