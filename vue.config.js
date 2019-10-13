@@ -1,6 +1,6 @@
 module.exports = {
 	lintOnSave: true,
-	// publicPath: '/client',
+	publicPath: '/client',
 
 	css: {
 		loaderOptions: {

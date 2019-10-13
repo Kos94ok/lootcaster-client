@@ -3,7 +3,7 @@
 		<combined-login-form />
 		<h1>Game browser</h1>
 		<the-game-browser v-if="this.isAuthenticated" />
-		<h1>Chat</h1>
+		<h1>Chat window</h1>
 		<the-chat-window v-if="this.isInGame" />
 	</div>
 </template>
