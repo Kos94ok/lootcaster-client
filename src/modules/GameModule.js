@@ -1,4 +1,18 @@
 const handlers = {
+	'gameState/chat': ({ state, commit }, data) => {
+		commit('setChatHistory', data)
+	},
+
+	'gameState/players': ({ state, commit, dispatch }, data) => {
+		commit('setPlayers', data)
+	},
+
+	'chat/message': ({ state, commit }, data) => {
+		const chatHistory = state.chatHistory.slice()
+		chatHistory.push(data)
+		commit('setChatHistory', chatHistory)
+	},
+
 	'update/playerConnected': ({ state, commit }, data) => {
 		const players = state.players.slice()
 		players.push(data)
@@ -13,18 +27,12 @@ const handlers = {
 		commit('setPlayers', players)
 	},
 
-	'chat/message': ({ state, commit }, data) => {
-		const chatHistory = state.chatHistory.slice()
-		chatHistory.push(data)
-		commit('setChatHistory', chatHistory)
+	'command/disconnect': ({ state, commit }, data) => {
+		console.log(`Disconnected. Reason: ${data.reason}`)
 	},
 
-	'gameState/chat': ({ state, commit }, data) => {
-		commit('setChatHistory', data)
-	},
-
-	'gameState/players': ({ state, commit, dispatch }, data) => {
-		commit('setPlayers', data)
+	'error/generic': ({ state, commit }, data) => {
+		console.error(`Server responded with generic error: ${data}`)
 	}
 }
 
@@ -48,6 +56,11 @@ export default {
 		joinGame: async({ state, commit, dispatch }, game) => {
 			commit('setId', game.id)
 			const webSocket = new WebSocket(process.env.VUE_APP_SERVER_WEBSOCKET + '/play/' + game.id)
+			const keepAliveInterval = setInterval(() => {
+				webSocket.send(JSON.stringify({
+					type: 'system/keepalive'
+				}))
+			}, 15000)
 
 			webSocket.onopen = (event) => {
 				commit('setWebSocket', webSocket)
@@ -73,6 +86,7 @@ export default {
 
 			webSocket.onclose = (event) => {
 				commit('setWebSocket', undefined)
+				clearInterval(keepAliveInterval)
 			}
 		}
 	},

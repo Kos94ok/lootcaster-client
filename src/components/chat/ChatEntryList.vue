@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ChatEntryListItem from '@/components/ChatEntryListItem'
+import ChatEntryListItem from '@/components/chat/ChatEntryListItem'
 export default {
 	components: {
 		ChatEntryListItem

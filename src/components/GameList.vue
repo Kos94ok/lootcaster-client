@@ -1,5 +1,6 @@
 <template>
 	<div class="game-list">
+		<div v-if="isEmpty" class="empty-list">No public games found!</div>
 		<the-game-list-item
 				:key="game.id"
 				v-for="game in games"
@@ -10,7 +11,6 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
 import TheGameListItem from '@/components/GameListItem'
 export default {
 	components: {
@@ -24,18 +24,13 @@ export default {
 		}
 	},
 
-	data: () => ({
-	}),
-
 	computed: {
-
+		isEmpty() {
+			return this.games.length === 0
+		}
 	},
 
 	methods: {
-		...mapActions({
-
-		}),
-
 		onGameSelected(game) {
 			this.$emit('gameSelected', game)
 		}
@@ -47,5 +42,6 @@ export default {
 	.game-list {
 		display: flex;
 		flex-direction: column;
+		overflow-y: auto;
 	}
 </style>

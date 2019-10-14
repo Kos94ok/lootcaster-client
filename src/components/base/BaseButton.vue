@@ -5,9 +5,7 @@
 <script>
 export default {
 	props: {
-		text: String,
-		icon: String,
-		isIconOnly: Boolean
+		icon: String
 	},
 
 	computed: {
@@ -28,7 +26,7 @@ export default {
 
 <style lang='scss' scoped>
 	.base-button {
-		margin: 10px;
+		margin: 8px 0 8px 0;
 		display: inline-block;
 		padding: 0.35em 1.2em;
 		border: 1px solid $inactive-color;
@@ -58,32 +56,11 @@ export default {
 			transition: all 0s;
 		}
 
-		&.btn-red {
-			color: lighten(red, 15%);
-			border-color: lighten(red, 15%);
-
-			&:focus, &:hover {
-				color: red;
-				border-color: red;
-			}
-
-			&:active {
-				color: darken(red, 20%);
-				border-color: darken(red, 20%);
-			}
-		}
-
-		@media all and (max-width: 30em) {
-			display: block;
-			margin: 0.4em auto;
-		}
-
-		.hidden {
-			display: none;
-		}
-
 		i {
-			margin-right: 3px;
+			margin-right: 4px;
+			&.hidden {
+				display: none;
+			}
 		}
 	}
 </style>

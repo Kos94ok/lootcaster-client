@@ -7,12 +7,33 @@ export default new Router({
 	routes: [
 		{
 			path: '/',
-			redirect: { name: 'WelcomeView' }
-		},
-		{
-			path: '/welcome',
 			name: 'WelcomeView',
 			component: () => import('./views/WelcomeView.vue')
+		},
+		{
+			path: '/register',
+			name: 'RegisterView',
+			component: () => import('./views/RegisterView.vue')
+		},
+		{
+			path: '/login',
+			name: 'LoginView',
+			component: () => import('./views/LoginView.vue')
+		},
+		/*{
+			path: '/profile',
+			name: 'ProfileView',
+			component: () => import('./views/ProfileView.vue')
+		},*/
+		{
+			path: '/browser',
+			name: 'BrowserView',
+			component: () => import('./views/BrowserView.vue')
 		}
+		/*{
+			path: '/play',
+			name: 'PlayView',
+			component: () => import('./views/PlayView.vue')
+		}*/
 	]
 })

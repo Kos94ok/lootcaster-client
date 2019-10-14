@@ -8,9 +8,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import BaseButton from '@/components/BaseButton'
-import BaseTextbox from '@/components/BaseTextbox'
-import ChatEntryList from '@/components/ChatEntryList'
+import BaseButton from '@/components/base/BaseButton'
+import BaseTextbox from '@/components/base/BaseTextbox'
+import ChatEntryList from '@/components/chat/ChatEntryList'
 export default {
 	components: {
 		BaseButton,

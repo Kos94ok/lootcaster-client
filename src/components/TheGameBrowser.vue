@@ -1,62 +1,81 @@
 <template>
 	<div class="the-game-browser">
 		<game-list :games="this.publicGames" @gameSelected="onGameSelected" />
-		<div v-if="this.publicGames.length === 0" class="empty-list">No public games found</div>
-		<base-button @click="onCreate">Create</base-button>
-		<base-button @click="onRefresh">Refresh</base-button>
+		<div class="controls">
+			<base-textbox placeholder="Game name" :value="enteredName" @input="onEnteredNameChanged" />
+			<div class="buttons">
+				<base-button @click="onCreate">Create</base-button>
+				<base-button @click="onRefresh">Refresh</base-button>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
 import GameList from '@/components/GameList'
-import BaseButton from '@/components/BaseButton'
-import BaseTextbox from '@/components/BaseTextbox'
+import BaseButton from '@/components/base/BaseButton'
+import BaseTextbox from '@/components/base/BaseTextbox'
 export default {
 	components: {
 		GameList,
-		BaseTextbox,
-		BaseButton
+		BaseButton,
+		BaseTextbox
 	},
 
 	data: () => ({
-		enteredUsername: '',
-		enteredPassword: '',
-		serverResponse: undefined
+		enteredName: ''
 	}),
 
 	mounted() {
-		this.refreshList()
+		this.fetchPublicGames()
 	},
 
 	computed: {
 		...mapState({
 			publicGames: state => state.gameBrowser.publicGames
-		})
+		}),
+
+		isEmpty() {
+			return this.publicGames.length === 0
+		}
 	},
 
 	methods: {
 		...mapActions({
 			joinGame: 'currentGame/joinGame',
 			createGame: 'gameBrowser/createGame',
-			refreshList: 'gameBrowser/fetchPublicGames'
+			fetchPublicGames: 'gameBrowser/fetchPublicGames'
 		}),
+
+		onEnteredNameChanged(value) {
+			this.enteredName = value
+		},
 
 		onGameSelected(game) {
 			this.joinGame(game)
 		},
 
 		async onCreate() {
-			this.createGame()
+			this.createGame({ name: this.enteredName })
+			this.enteredName = ''
 		},
 
 		async onRefresh() {
-			this.refreshList()
+			this.fetchPublicGames()
 		}
 	}
 }
 </script>
 
 <style scoped lang="scss">
+	.the-game-browser {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 
+		.list {
+		}
+	}
 </style>

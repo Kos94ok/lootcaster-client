@@ -1,11 +1,11 @@
 <template>
 	<div class="game-list-item">
-		<base-button @click="onClick">{{ game.id }}</base-button>
+		<base-button @click="onClick">{{ game.name }} | Owner: {{ game.owner }}</base-button>
 	</div>
 </template>
 
 <script>
-import BaseButton from '@/components/BaseButton'
+import BaseButton from '@/components/base/BaseButton'
 export default {
 	components: { BaseButton },
 	props: {

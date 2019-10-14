@@ -1,50 +1,55 @@
 <template>
 	<div class="combined-login-form">
+		<h1 v-if="isLoginForm">Login</h1>
+		<h1 v-if="isRegisterForm">Register</h1>
 		<base-textbox :value="enteredUsername" @input="onUsernameEntered" placeholder="Username"></base-textbox>
 		<base-textbox :value="enteredPassword" @input="onPasswordEntered" placeholder="Password" input-type="password"></base-textbox>
-		<base-button @click="onRegister">Register</base-button>
-		<base-button @click="onLogin">Login</base-button>
-		<base-button @click="onLogout">Logout</base-button>
 		<div class="response-status">
-			<div class="success">{{ successMessage }}</div>
-			<div class="error">{{ errorMessage }}</div>
+			<div class="success" v-if="isRequestSuccessful">{{ serverResponse.message }}</div>
+			<div class="error" v-if="isRequestFailed">{{ serverResponse.message }}</div>
 		</div>
+		<base-button class="button" v-if="isLoginForm" @click="onLoginClick">Login</base-button>
+		<base-button class="button" v-if="isRegisterForm" @click="onRegisterClick">Register</base-button>
+		<link-button class="button" v-if="isRegisterForm" @click="onToLoginClick">To login</link-button>
+		<link-button class="button" v-if="isLoginForm" @click="onToRegistrationClick">To registration</link-button>
 	</div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import BaseButton from '@/components/BaseButton'
-import BaseTextbox from '@/components/BaseTextbox'
+import BaseButton from '@/components/base/BaseButton'
+import BaseTextbox from '@/components/base/BaseTextbox'
+import RequiredProps from '@/props/RequiredProps'
+import LinkButton from '@/components/base/LinkButton'
 export default {
 	components: {
+		LinkButton,
 		BaseTextbox,
 		BaseButton
+	},
+
+	props: {
+		type: RequiredProps.LoginFormType
 	},
 
 	data: () => ({
 		enteredUsername: '',
 		enteredPassword: '',
-		serverResponse: undefined
+		serverResponse: {}
 	}),
 
 	computed: {
-		successMessage() {
-			if (!this.serverResponse || this.serverResponse.error) { return undefined }
-			return this.serverResponse
-		},
+		isRequestSuccessful() { return this.serverResponse.success },
+		isRequestFailed() { return !this.serverResponse.success },
 
-		errorMessage() {
-			if (!this.serverResponse || !this.serverResponse.error) { return undefined }
-			return this.serverResponse.error
-		}
+		isLoginForm() { return this.type === 'login' },
+		isRegisterForm() { return this.type === 'register' }
 	},
 
 	methods: {
 		...mapActions({
-			register: 'player/register',
-			login: 'player/login',
-			logout: 'player/logout'
+			registerPlayer: 'player/register',
+			loginPlayer: 'player/login'
 		}),
 
 		onUsernameEntered(value) {
@@ -54,34 +59,54 @@ export default {
 			this.enteredPassword = value
 		},
 
-		async onRegister() {
-			this.serverResponse = await this.register({
+		async onLoginClick() {
+			const response = await this.loginPlayer({
 				username: this.enteredUsername,
 				password: this.enteredPassword
 			})
+			if (response.success) {
+				return this.$router.push({ name: 'BrowserView' })
+			}
+			this.serverResponse = {
+				success: response.success,
+				message: response.error
+			}
 		},
-		async onLogin() {
-			this.serverResponse = await this.login({
+		async onRegisterClick() {
+			const response = await this.registerPlayer({
 				username: this.enteredUsername,
 				password: this.enteredPassword
 			})
+			this.serverResponse = {
+				success: response.success,
+				message: response.error || 'Your account has been created!'
+			}
+			this.onLoginClick()
 		},
-		async onLogout() {
-			this.logout()
-			this.serverResponse = undefined
+
+		onToLoginClick() {
+			this.$router.push({ name: 'LoginView' })
+		},
+		onToRegistrationClick() {
+			this.$router.push({ name: 'RegisterView' })
 		}
 	}
 }
 </script>
 
 <style scoped lang="scss">
-	.welcome-view {
-		width: 100%;
-		height: 100%;
-		background: black;
+	.combined-login-form {
+
+		h1 {
+			text-align: center;
+		}
+
+		.button {
+			width: 100%;
+		}
 
 		.response-status {
-			margin: 4px;
+			margin: 4px 0 4px 0;
 			.success {
 				color: green;
 			}

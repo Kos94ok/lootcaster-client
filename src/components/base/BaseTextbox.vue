@@ -1,6 +1,6 @@
 <template>
 	<div class='text-input'>
-		<label><slot></slot></label>
+		<label v-if="this.$slots.default"><slot></slot></label>
 		<input v-if='!multiline' class='card-title' :type=inputType v-model='text' :placeholder='placeholder' :readonly="readonly" />
 		<textarea v-if='multiline' class='card-title' :rows='rows' v-model='text' :placeholder='placeholder' :readonly="readonly"></textarea>
 	</div>
@@ -36,6 +36,8 @@ export default {
 
 <style lang="scss" scoped>
 	.text-input {
+		padding: 8px 0 8px 0;
+
 		label {
 			font: 16px/1.4 "Roboto", sans-serif;
 			letter-spacing: 0.5px;
