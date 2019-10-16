@@ -1,6 +1,6 @@
 <template>
 	<div class="game-list-item">
-		<base-button @click="onClick">{{ game.name }} | Owner: {{ game.owner }}</base-button>
+		<base-button @click="onClick">{{ game.name }} | Owner: {{ game.owner }} | Players: {{ game.playerCount }}</base-button>
 	</div>
 </template>
 

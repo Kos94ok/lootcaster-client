@@ -20,6 +20,14 @@ export default {
 			type: Array,
 			required: true
 		}
+	},
+
+	mounted() {
+		this.$el.scrollTop = this.$el.scrollHeight
+	},
+
+	updated() {
+		this.$el.scrollTop = this.$el.scrollHeight
 	}
 }
 </script>
@@ -28,5 +36,6 @@ export default {
 	.chat-message-list {
 		display: flex;
 		flex-direction: column;
+		overflow-y: hidden;
 	}
 </style>

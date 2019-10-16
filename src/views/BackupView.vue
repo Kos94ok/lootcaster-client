@@ -11,8 +11,8 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import CombinedLoginForm from '@/components/CombinedLoginForm'
-import TheGameBrowser from '@/components/TheGameBrowser'
-import TheChatWindow from '@/components/TheChatWindow'
+import TheGameBrowser from '@/components/browser/TheGameBrowser'
+import TheChatWindow from '@/components/chat/TheChatWindow'
 export default {
 	components: {
 		TheChatWindow,
@@ -32,8 +32,8 @@ export default {
 
 	computed: {
 		...mapGetters({
-			isAuthenticated: 'player/isAuthenticated',
-			isInGame: 'currentGame/isInGame'
+			isInGame: 'play/isInGame',
+			isAuthenticated: 'player/isAuthenticated'
 		})
 	},
 

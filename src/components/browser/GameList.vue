@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import TheGameListItem from '@/components/GameListItem'
+import TheGameListItem from '@/components/browser/GameListItem'
 export default {
 	components: {
 		TheGameListItem

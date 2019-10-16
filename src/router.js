@@ -20,20 +20,20 @@ export default new Router({
 			name: 'LoginView',
 			component: () => import('./views/LoginView.vue')
 		},
-		/*{
+		/* {
 			path: '/profile',
 			name: 'ProfileView',
 			component: () => import('./views/ProfileView.vue')
-		},*/
+		}, */
 		{
 			path: '/browser',
 			name: 'BrowserView',
 			component: () => import('./views/BrowserView.vue')
-		}
-		/*{
+		},
+		{
 			path: '/play',
 			name: 'PlayView',
 			component: () => import('./views/PlayView.vue')
-		}*/
+		}
 	]
 })

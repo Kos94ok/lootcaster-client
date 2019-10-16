@@ -5,8 +5,10 @@
 </template>
 
 <script>
-import TheGameBrowser from '@/components/TheGameBrowser'
+import TheGameBrowser from '@/components/browser/TheGameBrowser'
+import LoginCheckViewMixin from '@/mixins/LoginCheckViewMixin'
 export default {
+	mixins: [ LoginCheckViewMixin ],
 	components: {
 		TheGameBrowser
 	}

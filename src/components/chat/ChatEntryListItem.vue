@@ -1,6 +1,6 @@
 <template>
-	<div class="chat-message-list-item">
-		<span>{{ chatEntry.sender.username }}: {{ chatEntry.message }}</span>
+	<div class="chat-entry-list-item">
+		<span>{{ senderUsername }}: {{ chatEntry.message }}</span>
 	</div>
 </template>
 
@@ -13,10 +13,22 @@ export default {
 		}
 	},
 
+	computed: {
+		senderUsername() {
+			if (this.chatEntry.sender) {
+				return this.chatEntry.sender.username
+			}
+			return ''
+		}
+	},
+
 	methods: {
 	}
 }
 </script>
 
 <style scoped lang="scss">
+	.chat-entry-list-item {
+		word-wrap: break-word;
+	}
 </style>

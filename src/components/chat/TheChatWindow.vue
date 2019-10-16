@@ -1,8 +1,10 @@
 <template>
-	<div class="the-game-browser">
+	<div class="the-chat-window">
 		<chat-entry-list :chatEntries="this.chatHistory" />
-		<base-textbox :value="enteredMessage" @input="onMessageInput" placeholder="Your chat message" />
-		<base-button @click="onSend">Send</base-button>
+		<div class="controls">
+			<base-textbox :value="enteredMessage" @input="onMessageInput" placeholder="Your chat message" />
+			<base-button @click="onSend">Send</base-button>
+		</div>
 	</div>
 </template>
 
@@ -27,8 +29,8 @@ export default {
 
 	computed: {
 		...mapState({
-			webSocket: state => state.currentGame.webSocket,
-			chatHistory: state => state.currentGame.chatHistory
+			webSocket: state => state.play.webSocket,
+			chatHistory: state => state.play.chatHistory
 		})
 	},
 
@@ -53,5 +55,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+	.the-chat-window {
+		display: flex;
+		flex-direction: column;
+		position: fixed;
+		max-width: 30%;
+		max-height: 30%;
+		left: 0;
+		bottom: 0;
+	}
 </style>

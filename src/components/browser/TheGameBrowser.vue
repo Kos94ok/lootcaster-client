@@ -13,7 +13,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import GameList from '@/components/GameList'
+import GameList from '@/components/browser/GameList'
 import BaseButton from '@/components/base/BaseButton'
 import BaseTextbox from '@/components/base/BaseTextbox'
 export default {
@@ -43,7 +43,7 @@ export default {
 
 	methods: {
 		...mapActions({
-			joinGame: 'currentGame/joinGame',
+			joinGame: 'play/joinGame',
 			createGame: 'gameBrowser/createGame',
 			fetchPublicGames: 'gameBrowser/fetchPublicGames'
 		}),

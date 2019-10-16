@@ -35,11 +35,8 @@ export default {
 		},
 
 		fetchProfile: async({ state, commit }) => {
-			console.info('Fetching profile info')
 			const response = await NetworkingService.get('/profile')
-			console.log(response)
 			if (response.success) {
-				console.log('response.data.username')
 				commit('setUsername', response.data.username)
 			}
 			return response
