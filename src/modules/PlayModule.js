@@ -32,6 +32,7 @@ export default {
 
 			webSocket.onopen = (event) => {
 				commit('setWebSocket', webSocket)
+				commit('clearGameState')
 				webSocket.send(JSON.stringify({
 					type: 'get/chat'
 				}))
@@ -180,6 +181,12 @@ export default {
 
 		setPixi(state, pixi) {
 			state.pixi = pixi
+		},
+
+		clearGameState(state) {
+			state.players = []
+			state.entities = []
+			state.chatHistory = []
 		}
 	}
 }
